@@ -4,35 +4,144 @@
 <head>
   <title>Web Sprint 2 Challenge Kaylen Joiner</title>
   <script id="challenge">
-    // 👉 CHALLENGE 1
-    function profileActivation(profile, reason) {
+   function profileActivation(profile, reason) {
+  // If the profile's active status is undefined, return "impossible to ascertain status"
+  if (profile.active === undefined) {
+    return "impossible to ascertain status";
+  }
+  
+  // If the profile is already active and no reason is provided, return "confirm status manually"
+  if (profile.active && reason === undefined) {
+    return "confirm status manually";
+  }
+  
+  // Create a copy of the profile to update
+  let updatedProfile = { ...profile };
 
-    }
+  // If the profile is active, deactivate it and assign the reason
+  if (updatedProfile.active) {
+    updatedProfile.active = false;
+    updatedProfile.reason = reason;
+  } else {
+    // If the profile is inactive, activate it and remove the reason
+    updatedProfile.active = true;
+    delete updatedProfile.reason;
+  }
+
+  return updatedProfile;
+}
+ 
+
 
     // 👉 CHALLENGE 2
-    function mineSweeper(grid, x, y) {
-
+      function mineSweeper(grid, x, y) {
+    // Check if coordinates are valid
+    if (x < 1 || x > 3 || y < 1 || y > 3) {
+        return "invalid coordinates";
     }
+    
+    // Adjust coordinates to match array indices
+    x -= 1;
+    y -= 1;
+    
+    // Check the content of the grid at the specified coordinates
+    if (grid[y][x] === "🟥") {
+        return "🟥 💀"; // Mine found
+    } else {
+        return "🟦 🥳"; // Safe spot
+    }
+}
+
+    
 
     // 👉 CHALLENGE 3
     function booleanize(obj) {
-
+    // Check property name length
+    for (let prop in obj) {
+        if (prop.length > 9) {
+            return "shorten all prop names to 9 chars or less";
+        }
     }
+    
+    // Iterate over object properties
+    for (let prop in obj) {
+        // Transform value based on requirements
+        if (obj[prop] === 0) {
+            obj[prop] = false;
+        } else if (obj[prop] === 1) {
+            obj[prop] = true;
+        } else if (obj[prop] === null) {
+            delete obj[prop];
+        }
+    }
+    
+    // Return modified object
+    return obj;
+}
+
 
     // 👉 CHALLENGE 4
     function scrub(text, forbidden) {
-
+    // If text is empty or there are no forbidden words, return the original text
+    if (text === "" || forbidden.length === 0) {
+        return text;
     }
+
+    // Split text into words
+    let words = text.split(" ");
+
+    // Replace forbidden words
+    for (let i = 0; i < words.length; i++) {
+        if (forbidden.includes(words[i])) {
+            words[i] = "x".repeat(words[i].length);
+        }
+    }
+
+    // Join words back into text
+    return words.join(" ");
+}
+
 
     // 👉 CHALLENGE 5 (bonus, NOT graded)
     function normalizePhoneNumber(num) {
+    // Template for phone number format
+    let template = "(XXX) XXX-XXXX";
 
+    // Replace each 'X' in the template with the corresponding digit from the input number
+    for (let i = 0; i < num.length; i++) {
+        template = template.replace('X', num.charAt(i));
     }
+
+    return template;
+   }
+
+
 
     // 👉 CHALLENGE 6 (bonus, NOT graded)
-    function diceRolls() {
+//     function diceRolls() {
+//     let throws = 0; // Total number of rolls
+//     let counter = 0; // Consecutive count of sixes
+    
+//     while (true) {
+//         throws++; // Increment total rolls
+        
+//         // Roll the die
+//         let roll = Math.floor(Math.random() * 6) + 1;
+        
+//         // Check if the roll is a six
+//         if (roll === 6) {
+//             counter++; // Increment consecutive sixes count
+//             if (counter === 3) {
+//                 break; // Exit loop if three consecutive sixes are obtained
+//             }
+//         } else {
+//             counter = 0; // Reset consecutive sixes count if roll is not a six
+//         }
+//     }
+    
+//     return throws; // Return total number of rolls
+// }
 
-    }
 
     // 🧪 DO NOT make any changes below this line ===================
     globalThis.challengeVersion = 1
